@@ -1,0 +1,19 @@
+.change-layout{
+    margin-top: 10px;
+    border: 0px solid #000;
+    border-radius: 3px;
+	text-align: center;
+	background: rgba(49, 216, 184, 0.2);
+    width: 70%;
+	max-width: 1000px;
+	overflow: hidden;
+    height: 50px;
+}
+
+.change-layout > select {
+    background: #fafafa;
+    margin-top: 1%;
+    width: 200px;
+    height: 30px; 
+    transition: all 2.5s ease;
+}

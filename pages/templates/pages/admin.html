@@ -1,0 +1,238 @@
+{% extends 'pages/base.html' %}
+{% load staticfiles %}
+{% block content %}
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div id="header">
+                        <div class="left">
+                        <img class="logo hidden-md hidden-sm hidden-xs" src="http://pmk.tversu.ru/img/logo.jpg" border="0" alt="Факультет прикладной   математики и кибернетики"><b><a class="hidden-xs"        href="http://university.tversu.ru/">Тверской государственный университет</a><br></b><h1>Факультет прикладной математики и кибернетики</h1>
+                        </div>
+                </div>
+                      
+        <div class="container-fluid">
+        <div class="navbar-header">
+            
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Мобильная навигация</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+         
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            
+			
+			<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Бакалавриат<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+			  
+                <li><a href="/administrator/b1">1 курс</a></li>
+                <li><a href="/administrator/b2">2 курс</a></li>
+				<li><a href="/administrator/b3">3 курс</a></li>
+				<li><a href="/administrator/b4">4 курс</a></li>
+            
+              </ul>
+            </li>
+			
+			    <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Магистратура<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+			  
+                <li><a href="/administrator/m1">1 курс</a></li>
+                <li><a href="/administrator/m2">2 курс</a></li>
+         
+              </ul>
+            </li>
+              
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Помощь<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Как пользоваться (<b>ctrl+F1</b>)</a></li>
+                <li><a href="#">Предложить улучшение</a></li>
+                <li role="separator" class="divider"></li>
+                 <li><a href="#">О разработчиках</a></li>
+              </ul>
+            </li>
+
+            <li><a href="/logout">Выйти</a></li>
+           
+          </ul>
+		  
+    </div><!--/.nav-collapse -->
+             </div>
+      </div>
+      </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-7 xs-visible">
+                <div class="container">
+                </div>
+                <table id="table-item">
+					<thead>
+						<tr>
+							<th colspan="2">Дата | Время</th>
+							{% for group in groups %}
+								<th>{{ group.number }} ({{ group.title }})</th>
+							{% endfor %}						
+						</tr>
+					</thead>
+					<tbody>
+						{% for day in days %}
+							<tr>
+								<th rowspan="6" class="vertical">{{ day.titleRus }}</th>
+							{% for pair in pairs %}
+									<th>{{ pair.time }}</th>
+									{% for group in groups %}
+		                            	<td class="edit-cell" data-target="#myModal" data-pair={{ pair.pair }} data-group={{ group.number }} data-day={{ day.titleEng }} ondrop="dropResults(event)" ondragover="makeDroppable(event)">
+                                    <div class="cell-content">
+  	                            		  {% for plan in plans %}
+  		                            			{% if plan.pair.pair == pair.pair and plan.group.number == group.number and plan.day.titleEng == day.titleEng %}
+                                          <div class="hidden" data-plan-id="{{ plan.id }}"></div>
+                                          <div class="hidden" data-teacher="{{ plan.teacher.name }}"></div>
+                                          <div class="hidden" data-alter="{{ plan.alter }}"></div>
+                                          <div class="hidden" data-subject="{{ plan.subject.title }}"></div>
+                                          <div class="hidden" data-audience="{{ plan.audience.title }}"></div>
+                                          <div>
+    		                            				{% if plan.alter == 1 %}
+                                              (+)
+    		                            				{% endif %}
+    		                            				{% if plan.alter == 2 %}
+    		                            					(-)
+    		                            				{% endif %}
+    		                            				{{ plan.subject.title }}, {{ plan.audience.title }}
+                                          </div>
+  		                            			{% endif %}
+  	                            		  {% endfor %}
+                                    </div>
+		                            	</td>
+		                            {% endfor %}
+								</tr>
+							{% endfor %}
+						{% endfor %}
+					</tbody>
+				</table>  
+                </div>
+				
+				
+                <div class="col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-5 col-sm-offset-0 hidden-xs">
+                    <div class="sidebar">
+                <div class="top"><h4>Панель управления</h4></div>
+	             <div class="panel">
+                    <div id="form">
+                    	<select id="teacher" class="form-control full">
+                        	<option value="">ФИО преподавателя</option>
+	                        {% for teacher in teachers %}
+	                        	<option value="{{ teacher.name }}">{{ teacher.name }}</option>
+	                        {% endfor %}
+                        </select>
+                        <br>
+                        <select id="subject" class="form-control full">
+                        	<option value="">Название дисциплины</option>
+	                        {% for subject in subjects %}
+	                        	<option value="{{ subject.title }}">{{ subject.title }}</option>
+	                        {% endfor %}
+                        </select>
+                        <input type="text" class="hidden" id="course" value="{{ course }}"/>
+                        {% csrf_token %}
+                    
+                        <br>
+                        <form role="form" class="form-inline">
+	                        <select id="aud" class="form-control" onmousedown="$(':first-child', this).remove(); this.onmousedown = null;">
+	                        	<option value="">Ауд</option>
+		                        {% for audience in audiences %}
+		                        	<option value="{{ audience.title }}">{{ audience.title }}</option>
+		                        {% endfor %}
+	                        </select>
+		                    <select id="alter" class="form-control">
+		                        <option value="0">( )</option>
+		                        <option value="1">(+)</option>
+		                        <option value="2">(-)</option>
+	                        </select>
+                        </form>
+                    </div>
+	                    
+                        <br>
+                        <button id="btnGenerateModule" class="btn btn-success btn-block btn-lg">
+                            Сгенерировать
+                        </button>
+                        
+                
+                        <div id="result-form" draggable="true" ondragstart="dragResults(event)">
+                            <div class="field subject" data-field="subject"></div>
+                        <div class="field aud" data-field="aud"></div>
+                        <div class="field alter" data-field="alter"></div>
+                            <div class="clear"></div>
+                        </div>
+                </div>
+	             </div>
+                </div>
+				
+				<div class="container-fluid">
+        <div class="navbar-header">
+            
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Мобильная навигация</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+         
+        </div>
+        
+             </div>
+				
+            </div>
+        </div>
+     
+
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" type="button" data-dismiss="modal">×</button>
+				<h4 class="modal-title">РЕДАКТИРОВАНИЕ</h4>
+			</div>
+			<div class="modal-body">
+        <div class="panel">
+          <div id="edit-form">
+            <input type="text" class="hidden" id="edit-plan" value=""/>
+            <input type="text" class="hidden" id="group-plan" value=""/>
+            <input type="text" class="hidden" id="day-plan" value=""/>
+            <input type="text" class="hidden" id="pair-plan" value=""/>
+            <input type="text" class="hidden" id="edit-course" value="{{ course }}"/>
+            <select id="edit-teacher" class="form-control full">
+              {% for teacher in teachers %}
+                <option value="{{ teacher.name }}">{{ teacher.name }}</option>
+              {% endfor %}
+            </select>
+            <select id="edit-subject" class="form-control full">
+              {% for subject in subjects %}
+                <option value="{{ subject.title }}">{{ subject.title }}</option>
+              {% endfor %}
+            </select>
+            <select id="edit-aud" class="form-control">
+              {% for audience in audiences %}
+                <option value="{{ audience.title }}">{{ audience.title }}</option>
+              {% endfor %}
+            </select>
+            <select id="edit-alter" class="form-control">
+              <option value="0">( )</option>
+              <option value="1">(+)</option>
+              <option value="2">(-)</option>
+            </select>
+            <div id="save-lesson" class="btn btn-success">Сохранить</div>
+            <div id="delete-lesson" class="btn btn-danger">Удалить</div>
+          </div>
+      </div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/sidebar.js' %}"></script> 
+  <script src="{% static 'js/editCell.js' %}"></script> 
+{% endblock %}
+

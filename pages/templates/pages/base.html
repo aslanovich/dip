@@ -1,0 +1,59 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>TverSU Timetable. Admin Page</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    
+    <!--Drag&Drop (HTML5) Init -->
+    <script>
+    	//Вызывается при первом перетаскивании
+      function dragResults(e) {
+        var data = {};
+        data.teacher = $("#result-form .teacher").text();
+        data.subject = $("#result-form .subject").text();
+      	data.aud = $("#result-form .aud").text();
+      	data.alter = $("#result-form .alter").text();
+        // Создается JSON строка
+        e.dataTransfer.setData("text/plain",JSON.stringify(data));
+      }
+      function makeDroppable(e) {
+        e.preventDefault();
+      }
+      function dropResults(e) {
+        e.preventDefault();
+      //Парсим JSON и записываем данные в объект rdata
+        var rdata = JSON.parse(e.dataTransfer.getData("text/plain"));
+        var tableItem = "<div>" + rdata.alter + " " + rdata.subject + ", а." + rdata.aud + "</div>";
+        //Вставка в ячейку (в div блок) текста tableItemText
+        $el = $(e.currentTarget);
+        $el.append(tableItem);
+        var pair = $el.attr('data-pair');
+        var day = $el.attr('data-day');
+        var group = $el.attr('data-group');
+        form.addPlanDetails(pair, day, group);
+        data = form.send();
+        console.log(data);
+      }
+    </script>
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+    {% block scripts %}{% endblock %}     
+  </body>
+</html>

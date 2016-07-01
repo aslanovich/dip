@@ -1,0 +1,83 @@
+table {
+    border-collapse: collapse;
+    margin-bottom: 3em;
+    width: 100%;
+    background: #fff;
+}
+td, th {
+    padding: 0.75em 1.1em;
+    text-align: center;
+}
+th {
+    background-color: #8B2929;
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+    
+}
+td{
+    border: 1px dashed #b2a458;
+}
+tbody th {
+	background-color: #2E97A8;
+}
+tbody tr:nth-child(2n-1) {
+    background-color: #f5f5f5;
+    transition: all .125s ease-in-out;
+}
+
+
+/*Подчеркивание нижней границы*/
+
+tbody tr:nth-child(6n) {
+    border-bottom: 1px solid #fff;
+}
+
+
+tbody tr:hover {
+    background-color: rgba(46, 151, 168, 0.24);
+}
+
+td:hover {
+    background-color: rgba(139, 41, 41, 0.4);
+}
+
+th:hover {
+    background-color: rgba(139, 41, 41, 0.4);
+}
+
+
+* .vertical{
+    background: #0d7586;
+
+}
+
+
+/*ПАНЕЛЬ УПРАВЛЕНИЯ АДМИНИСТРАТОРА*/
+
+#active-module {
+    border: 2px solid #000;
+}
+
+.vertical {
+    width: 1%;
+}
+
+.hours{
+     width: 5%;
+}
+
+/*ПАНЕЛЬ УПРАВЛЕНИЯ АДМИНИСТРАТОРА*/
+
+.modal-content {
+    background: whitesmoke;
+    border-radius: 0;
+}
+
+#edit-form select {
+	margin-top: 10px;
+}
+
+#edit-form select {
+	margin-bottom: 10px;
+}

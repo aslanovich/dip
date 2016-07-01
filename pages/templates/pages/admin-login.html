@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>@admin</title>
+    <link rel="stylesheet" href="{% static 'css/admin-login.css' %}">
+</head>
+<body>
+
+    <div id="login">
+        <form action="" method="post">
+            {% csrf_token %}
+            <fieldset class="clearfix">
+               <div class="auth-panel">
+               <p><img class="bw pic" src="{% static 'img/logo.png' %}" alt="Логотип университета" width="110"></p>
+                <p><span class="fontawesome-user"></span><input type="text" value="Логин" name="username" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p>
+                
+                <p><span class="fontawesome-lock"></span><input type="password" name="password"  value="Пароль" onBlur="if(this.value == '') this.value = 'Пароль'" onFocus="if(this.value == 'Пароль') this.value = ''" required></p>
+                <p><input type="submit" value="ВОЙТИ"></p>
+                {% if error %}
+                    <p>WRONG login OR password</p>
+                {% endif %}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+   
+</body>
+</html>

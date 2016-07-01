@@ -1,0 +1,76 @@
+.sidebar {
+    float: right;
+    background: rgb(255, 255, 255);
+    width: 20%;
+    border-radius: 5px;
+    position: fixed;
+    top: 35%;
+    left: 65%;
+    right: 10px;
+    height: auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.top {
+    color: aliceblue;
+    text-align: center;
+    border: 0 solid #fff;
+    border-radius: 3px;
+    font-size: 120%;
+    padding: 1px 0 1px 0;
+    background: rgba(15, 70, 34, 0.74);
+}
+
+.panel {
+    margin-top: 10px;
+    margin-left: 2%;
+    border: 0px solid #000;
+    border-radius: 3px;
+    word-wrap: normal;
+    width: 95%;
+    height: 85%
+}
+
+.panel input{
+    margin: 0 auto;
+    padding: 5px;
+    font-size: 15px;
+    width: 90%;
+    height: 30px;
+}
+
+
+.panel select{
+    width: 30%;
+    height: 35px;
+    margin-left: 5%;
+}
+
+.panel .full {
+    width: 80%;
+    box-sizing: border-box;
+}
+
+
+#result-form {
+    padding-left: 6%;
+    margin: 5% auto;
+    height: auto;
+    width: auto;
+}
+
+.field {
+  float: center;
+  display: inline-block;  
+  height: auto;
+  width: 27%;
+  text-align: center;
+  word-wrap: break-word;
+    
+}
+
+#result-form:hover {
+    font-size: 110%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    cursor: move;
+}
